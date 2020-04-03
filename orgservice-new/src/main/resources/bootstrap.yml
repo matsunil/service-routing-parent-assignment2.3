@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: orgservice-new
+  profiles:
+    active:
+      default
+  cloud:
+    config:
+      enabled: true

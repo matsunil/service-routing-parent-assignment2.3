@@ -1,0 +1,69 @@
+server:
+  port: 5555
+
+#Setting logging levels
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.thoughtmechanix: DEBUG
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka/
+
+##Vitaly: initially all zuul mapping are commented out. 
+#This will be Use Case 1 in section 6.3.1
+
+##Uncomment the mapping below one after another, so that at a time
+##only one zuul mapping is active. Each time rebuild and rerun the application.
+  
+#section 6.3.2 without assets: Use Case 2.
+#zuul:
+#  routes:
+#    organizationservice: /organization/**
+
+#section 6.3.2 with assets: Use Case 3
+#zuul:
+#  routes:
+#   organizationservice: /organization/**
+#   assetsservice: /assets/**
+  
+# section 6.3.2 with ignored-services. Use Case 4
+#zuul:
+#  ignored-services: 'organizationservice'
+#  routes:
+#    organizationservice: /organization/**
+  
+# section 6.3.2 Setting up custom routes with a prefix. Use Case 5
+#zuul:
+#  ignored-services: '*'
+#  prefix: /api
+#  routes:
+#    organizationservice: /organization/**
+#    assetsservice: /assets/**
+  
+# section 6.3.3 Mapping the assets service to a static route. Use case 6
+zuul:
+  routes:
+    assetstatic:
+      path: /assetstatic/**
+      url:  http://assetservice-static:8081
+ 
+# section 6.3.3 Mapping assets service statically to multiple routes. Use Case 7
+#zuul:
+#  routes:
+#    assetstatic:
+#      path: /assetstatic/**
+#      serviceId: assetstatic
+#ribbon:
+#  eureka:
+#    enabled: false
+#assetstatic:
+#  ribbon:
+#    listOfServers: http://assetservice-static1:8081,http://assetservice-static2:8082
